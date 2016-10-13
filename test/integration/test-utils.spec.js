@@ -1,7 +1,7 @@
 
 import { expect, sinon } from '../support/test-utils';
 
-describe('test environment', function() {
+describe('test-utils integration tests', function() {
 
   it('"describe" and "it" are defined', function() {
     // if here without errors, they are defined

@@ -15,6 +15,24 @@ describe('nquirer unit test', function() {
     expect(getQuestions()).to.eql([]);
   });
 
+  it('necessitate adds to existing questions', function() {
+    necessitate([
+      { property1: 'value1' }
+    ]);
+    expect(getQuestions()).to.eql([
+      { property1: 'value1' }
+    ]);
+    necessitate([
+      { property2: 'value2' },
+      { property3: 'value3' }
+    ]);
+    expect(getQuestions()).to.eql([
+      { property1: 'value1' },
+      { property2: 'value2' },
+      { property3: 'value3' }
+    ]);
+  });
+
   it('necessitate, cannot modify input', function() {
     const questions = [{ property1: 'init' }];
     const expectation = [{ property1: 'init' }];

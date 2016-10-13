@@ -1,5 +1,5 @@
 {
-  "name": "nconf-inquirer",
+  "name": "nquirer",
   "version": "0.1.0",
   "description": "Hierarchical configuration with nconf combined with inquirer to prompt user for missing configuration.",
   "main": "dist/index.js",
@@ -12,6 +12,7 @@
     "url": "git+ssh://git@github.com/coreyferguson/nconf-inquirer.git"
   },
   "keywords": [
+    "nquirer",
     "nconf",
     "inquirer",
     "configuration",

@@ -1,6 +1,6 @@
 {
   "name": "nquirer",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Hierarchical configuration with nconf combined with inquirer to prompt user for missing configuration.",
   "main": "dist/nquirer.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/coreyferguson/nconf-inquirer.git"
+    "url": "git+ssh://git@github.com:coreyferguson/nquirer.git"
   },
   "keywords": [
     "nquirer",
@@ -23,9 +23,9 @@
   "author": "Corey Ferguson <corey.t.ferguson@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/coreyferguson/nconf-inquirer/issues"
+    "url": "https://github.com/coreyferguson/nquirer/issues"
   },
-  "homepage": "https://github.com/coreyferguson/nconf-inquirer#readme",
+  "homepage": "https://github.com/coreyferguson/nquirer#readme",
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-preset-es2015": "^6.16.0",

@@ -1,8 +1,9 @@
 
 # nquirer
 
-Hierarchical configuration with nconf combined with inquirer to prompt user for
-missing configuration.
+Hierarchical configuration with [nconf](https://github.com/indexzero/nconf)
+combined with [inquirer](https://github.com/SBoudrias/Inquirer.js) to prompt
+user for missing configuration.
 
 ## Install
 

@@ -1,6 +1,6 @@
 {
   "name": "nquirer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Hierarchical configuration with nconf combined with inquirer to prompt user for missing configuration.",
   "main": "dist/nquirer.js",
   "scripts": {

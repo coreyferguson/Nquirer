@@ -60,7 +60,9 @@ inquire().then(nconf => {
 
 ## API
 
+API documentation can be found here: https://coreyferguson.github.io/nquirer/module-nquirer.html
 
+It can also be found directly in the source: [`src/nquirer.js`](./src/nquirer.js)
 
 ## Contribution
 

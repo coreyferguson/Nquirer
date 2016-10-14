@@ -1,6 +1,6 @@
 
 import { expect, sinon } from '../support/test-utils';
-import { necessitate, getQuestions, reset } from '../../src/nquirer';
+import { nconf, necessitate, getQuestions, reset } from '../../src/nquirer';
 import deepFreeze from 'deep-freeze';
 
 describe('nquirer unit test', function() {
@@ -9,10 +9,27 @@ describe('nquirer unit test', function() {
     reset();
   });
 
-  it('reset', function() {
+  it('reset questions', function() {
     necessitate([{ property1: 'value1' }]);
     reset();
     expect(getQuestions()).to.eql([]);
+  });
+
+  it('reset nconf', function() {
+    expect(nconf.get('property1')).to.eql(undefined);
+    nconf.file({ file: 'test/data/config.json' });
+    nconf.set('new property', 'new value');
+    nconf.set('property1', 'value1');
+    expect(nconf.get('new property')).to.eql('new value');
+    reset();
+    nconf.file({ file: 'test/data/config.json' });
+    expect(nconf.get('new property')).to.eql(undefined);
+    expect(nconf.get('property1')).to.eql('value1');
+  });
+
+  it('load config from file', function() {
+    nconf.file({ file: 'test/data/config.json' });
+    expect(nconf.get('property1')).to.eql('value1');
   });
 
   it('necessitate adds to existing questions', function() {

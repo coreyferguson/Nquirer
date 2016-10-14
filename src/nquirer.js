@@ -38,6 +38,7 @@ export function necessitate(questions) {
  */
 export function reset() {
   _questions = [];
+  nconf.reset();
 };
 
 /**

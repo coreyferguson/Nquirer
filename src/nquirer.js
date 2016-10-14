@@ -3,7 +3,7 @@ import nconfLib from 'nconf';
 import inquirer from 'inquirer';
 
 /**
- * @module Nquirer
+ * @module nquirer
  */
 
 let _questions = [];
@@ -49,7 +49,7 @@ export function reset() {
 };
 
 /**
- * Get current necessary questions.
+ * Get array of necessary questions.
  * @returns {Question[]}
  */
 export function getQuestions() {

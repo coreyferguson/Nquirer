@@ -7,14 +7,9 @@
 npm test
 ```
 
-## Documentation
-
-```bash
-npm run jsdoc
-```
-
 ## Publish
 
-- Update [`package.json`](./package.json) `version` and commit/push to github.
-- Run `npm run build` to transpile via Babel into `build` folder.
+- Update [`package.json`](./package.json) `version`.
+- Run `npm run build` to transpile and generate docs.
+- Commit and push to github.
 - Publish via `npm publish` command.

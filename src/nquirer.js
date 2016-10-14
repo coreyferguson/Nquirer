@@ -20,12 +20,22 @@ export const nconf = nconfLib;
  * @returns {Promise.<nconf>}
  */
 export function inquire() {
-  return inquirer.prompt(_questions).then(answers => {
-    for (let key in answers) {
-      nconf.set(key, answers[key]);
+  let missingQuestions = [];
+  _questions.forEach(question => {
+    if (!nconf.get(question.name)) {
+      missingQuestions.push(question);
     }
-    return nconf;
   });
+  if (missingQuestions.length === 0) {
+    return Promise.resolve(nconf);
+  } else {
+    return inquirer.prompt(missingQuestions).then(answers => {
+      for (let key in answers) {
+        nconf.set(key, answers[key]);
+      }
+      return nconf;
+    });
+  }
 };
 
 /**

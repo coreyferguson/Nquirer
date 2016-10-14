@@ -2,10 +2,11 @@
   "name": "nquirer",
   "version": "0.1.0",
   "description": "Hierarchical configuration with nconf combined with inquirer to prompt user for missing configuration.",
-  "main": "dist/index.js",
+  "main": "dist/nquirer.js",
   "scripts": {
     "jsdoc": "./node_modules/jsdoc/jsdoc.js src -d documentation",
-    "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register test/**/*.spec.js"
+    "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register test/**/*.spec.js",
+    "build": "./node_modules/babel-cli/bin/babel.js src -d dist"
   },
   "repository": {
     "type": "git",

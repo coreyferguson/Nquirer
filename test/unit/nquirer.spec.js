@@ -97,4 +97,21 @@ describe('nquirer unit test', function() {
     });
   });
 
+  it('do not inquire for previously set configuration', function() {
+    nconf.file('test/data/config.json');
+    const stub = sandbox.stub(inquirer, "prompt")
+      .returns(Promise.resolve({ input: 'value' }));
+    const questions = [{
+      type: 'text',
+      name: 'input',
+      message: 'Input'
+    }];
+    necessitate(questions);
+    nconf.set('input', 'value');
+    return inquire().then(() => {
+      expect(stub.calledOnce).to.be.false;
+      expect(nconf.get('input')).to.eql('value');
+    });
+  });
+
 });

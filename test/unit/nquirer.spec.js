@@ -1,12 +1,26 @@
 
 import { expect, sinon } from '../support/test-utils';
-import { nconf, necessitate, getQuestions, reset } from '../../src/nquirer';
+import {
+  nconf,
+  inquire,
+  necessitate,
+  getQuestions,
+  reset
+} from '../../src/nquirer';
 import deepFreeze from 'deep-freeze';
+import inquirer from 'inquirer';
 
 describe('nquirer unit test', function() {
 
+  let sandbox;
+
+  before(function() {
+    sandbox = sinon.sandbox.create();
+  });
+
   afterEach(function() {
     reset();
+    sandbox.restore();
   });
 
   it('reset questions', function() {
@@ -17,18 +31,18 @@ describe('nquirer unit test', function() {
 
   it('reset nconf', function() {
     expect(nconf.get('property1')).to.eql(undefined);
-    nconf.file({ file: 'test/data/config.json' });
+    nconf.file('test/data/config.json');
     nconf.set('new property', 'new value');
     nconf.set('property1', 'value1');
     expect(nconf.get('new property')).to.eql('new value');
     reset();
-    nconf.file({ file: 'test/data/config.json' });
+    nconf.file('test/data/config.json');
     expect(nconf.get('new property')).to.eql(undefined);
     expect(nconf.get('property1')).to.eql('value1');
   });
 
   it('load config from file', function() {
-    nconf.file({ file: 'test/data/config.json' });
+    nconf.file('test/data/config.json');
     expect(nconf.get('property1')).to.eql('value1');
   });
 
@@ -66,6 +80,21 @@ describe('nquirer unit test', function() {
     questionsAfter.push({ property2: 'value2' });
     questionsAfter[0].property1 = 'modification 2';
     expect(getQuestions()).to.eql(expectation);
+  });
+
+  it('inquire for missing configuration', function() {
+    nconf.file('test/data/config.json');
+    sandbox.stub(inquirer, "prompt")
+      .returns(Promise.resolve({ input: 'value' }));
+    const questions = [{
+      type: 'text',
+      name: 'input',
+      message: 'Input'
+    }];
+    necessitate(questions);
+    return inquire().then(() => {
+      expect(nconf.get('input')).to.eql('value');
+    });
   });
 
 });

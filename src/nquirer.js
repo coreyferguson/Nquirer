@@ -1,5 +1,6 @@
 
 import nconfLib from 'nconf';
+import inquirer from 'inquirer';
 
 /**
  * @module Nquirer
@@ -8,18 +9,24 @@ import nconfLib from 'nconf';
 let _questions = [];
 
 /**
- * Resolves to nconf configuration.
- * User will be prompted for missing configuration previously specified
- * by the {@link require} function.
- * @returns {Promise.<nconf>}
- */
-export function inquire() {
-};
-
-/**
  * Reference to nconf instance.
  */
 export const nconf = nconfLib;
+
+/**
+ * Resolves to nconf configuration.
+ * User will be prompted for missing configuration previously specified
+ * by the `necessitate` function. Answers automatically set in nconf.
+ * @returns {Promise.<nconf>}
+ */
+export function inquire() {
+  return inquirer.prompt(_questions).then(answers => {
+    for (let key in answers) {
+      nconf.set(key, answers[key]);
+    }
+    return nconf;
+  });
+};
 
 /**
  * Add required configuration options in the form of Inquirer questions.

@@ -7,6 +7,7 @@ import inquirer from 'inquirer';
  */
 
 let _questions = [];
+let _inquirePromiseCache = null;
 
 /**
  * Reference to nconf instance.
@@ -20,22 +21,33 @@ export const nconf = nconfLib;
  * @returns {Promise.<nconf>}
  */
 export function inquire() {
-  let missingQuestions = [];
-  _questions.forEach(question => {
-    if (!nconf.get(question.name)) {
-      missingQuestions.push(question);
-    }
-  });
-  if (missingQuestions.length === 0) {
-    return Promise.resolve(nconf);
-  } else {
-    return inquirer.prompt(missingQuestions).then(answers => {
-      for (let key in answers) {
-        nconf.set(key, answers[key]);
+  if (!_inquirePromiseCache) {
+
+    // find missing questions
+    let missingQuestions = [];
+    _questions.forEach(question => {
+      if (!nconf.get(question.name)) {
+        missingQuestions.push(question);
       }
-      return nconf;
     });
+
+    // no missing questions
+    if (missingQuestions.length === 0) {
+      _inquirePromiseCache = Promise.resolve(nconf);
+    }
+
+    // inquire for missing questions
+    else {
+      _inquirePromiseCache = inquirer.prompt(missingQuestions).then(answers => {
+        for (let key in answers) {
+          nconf.set(key, answers[key]);
+        }
+        return nconf;
+      });
+    }
+
   }
+  return _inquirePromiseCache;
 };
 
 /**
@@ -55,6 +67,7 @@ export function necessitate(questions) {
  */
 export function reset() {
   _questions = [];
+  _inquirePromiseCache = null;
   nconf.reset();
 };
 

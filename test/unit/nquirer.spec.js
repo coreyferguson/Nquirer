@@ -19,8 +19,8 @@ describe('nquirer unit test', function() {
   });
 
   afterEach(function() {
-    reset();
     sandbox.restore();
+    reset();
   });
 
   it('reset questions', function() {
@@ -110,6 +110,25 @@ describe('nquirer unit test', function() {
     nconf.set('input', 'value');
     return inquire().then(() => {
       expect(stub.calledOnce).to.be.false;
+      expect(nconf.get('input')).to.eql('value');
+    });
+  });
+
+  it('cache previous inquire', function() {
+    nconf.file('test/data/config.json');
+    const stub = sandbox.stub(inquirer, "prompt")
+      .returns(Promise.resolve({ input: 'value' }));
+    const questions = [{
+      type: 'text',
+      name: 'input',
+      message: 'Input'
+    }];
+    necessitate(questions);
+    return Promise.all([
+      inquire(),
+      inquire()
+    ]).then(() => {
+      expect(stub.calledOnce).to.be.true;
       expect(nconf.get('input')).to.eql('value');
     });
   });
